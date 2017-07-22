@@ -5,7 +5,7 @@
         <BehaviorDescription name="behavior" src="behavior_1" xar="behavior.xar" />
     </BehaviorDescriptions>
     <Dialogs>
-        <Dialog name="guideapp" src="guideapp/guideapp.dlg" />
+        <Dialog name="guidedialog" src="guidedialog/guidedialog.dlg" />
     </Dialogs>
     <Resources>
         <File name="pepper" src="html/css/pepper.css" />
@@ -20,10 +20,7 @@
         <File name="main" src="main.py" />
     </Resources>
     <Topics>
-        <Topic name="guideapp_enu" src="guideapp/guideapp_enu.top" topicName="guideapp" language="en_US" />
+        <Topic name="guidedialog_enu" src="guidedialog/guidedialog_enu.top" topicName="guidedialog" language="en_US" />
     </Topics>
     <IgnoredPaths />
-    <Translations auto-fill="en_US">
-        <Translation name="translation_en_US" src="translations/translation_en_US.ts" language="en_US" />
-    </Translations>
 </Package>

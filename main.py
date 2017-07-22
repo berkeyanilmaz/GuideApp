@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import qi
 import os
@@ -5,7 +7,9 @@ import os
 
 class GuideApp(object):
     subscriber_list = []
-
+    loaded_topic = ""
+    next_app = ""
+    
     def __init__(self, application):
         # Get session
         self.application = application
@@ -30,6 +34,8 @@ class GuideApp(object):
         self.memory = self.session.service("ALMemory")
 
         self.create_signals()
+        self.connect_to_preferences()
+
         self.logger.info("Initialized!")
 
     # Preferences
@@ -125,7 +131,7 @@ class GuideApp(object):
     def start_dialog(self):
         self.logger.info("Loading dialog")
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        topic_path = os.path.realpath(os.path.join(dir_path, "guideapp", "guideapp_enu.top"))
+        topic_path = os.path.realpath(os.path.join(dir_path, "guidedialog", "guidedialog_enu.top"))
         self.logger.info("File is: {}".format(topic_path))
         try:
             self.loaded_topic = self.dialog.loadTopic(topic_path)
@@ -134,7 +140,7 @@ class GuideApp(object):
             self.logger.info("Dialog loaded!")
         except Exception, e:
             self.logger.info("Error while loading dialog: {}".format(e))
-        self.dialog.gotoTag("start", "guideapp")
+        self.dialog.gotoTag("start", "guidedialog")
 
     @qi.nobind
     def stop_dialog(self):
@@ -147,6 +153,31 @@ class GuideApp(object):
             self.logger.info("Dialog unloaded!")
         except Exception, e:
             self.logger.info("Error while unloading dialog: {}".format(e))
+
+    # Screen Show/Hide
+
+    @qi.nobind
+    def show_screen(self):
+        folder = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
+        self.logger.info("Loading tablet page for app: {}".format(folder))
+        try:
+            ts = self.session.service("ALTabletService")
+            ts.loadApplication(folder)
+            ts.showWebview()
+            self.logger.info("Tablet loaded.")
+        except Exception, e:
+            self.logger.error("Error starting tablet page{}".format(e))
+
+    @qi.nobind
+    def hide_screen(self):
+        self.logger.info("Stopping tablet")
+        try:
+            ts = self.session.service("ALTabletService")
+            ts.hideWebview()
+            self.logger.info("Tablet stopped.")
+        except Exception, e:
+            self.logger.error("Error hiding tablet page{}".format(e))
+
 
 if __name__ == "__main__":
     # with this you can run the script for tests on remote robots

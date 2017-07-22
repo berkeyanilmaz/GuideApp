@@ -15,6 +15,9 @@
    <nature>interactive</nature>
    <permissions/>
   </behaviorContent>
+  <dialogContent topicName="guidedialog" typeVersion="1.0">
+   <topic language="en_US" path="guidedialog/guidedialog_enu.top"/>
+  </dialogContent>
  </contents>
  <services>
   <service name="GuideApp" execStart="main.py" autorun="false"/>
