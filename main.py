@@ -33,6 +33,10 @@ class GuideApp(object):
         self.logger.info("Initializing - ALMemory...")
         self.memory = self.session.service("ALMemory")
 
+        # Autonomous Life
+        self.logger.info("Initializing - ALAutonomousLife...")
+        self.life = self.session.service("ALAutonomousLife")
+
         self.create_signals()
         self.connect_to_preferences()
 
@@ -46,10 +50,9 @@ class GuideApp(object):
         self.logger.info("Connecting to preferences...")
         try:
             self.next_app = str(self.preferences.getValue("global_variables", "main_app_id"))
-            self.logger.info("Next app: {}".format(self.next_app))
             self.logger.info("Preferences successfully retrieved!")
         except Exception, e:
-            self.logger.info(e)
+            self.logger.info("Error while connecting to preferences: {} ".format(e))
 
     # Event - signal related methods start
 
@@ -90,7 +93,7 @@ class GuideApp(object):
             self.logger.info("Switching to {}".format(self.next_app))
             self.life.switchFocus(self.next_app)
         except Exception, e:
-            self.logger.info("Error while switching apps: {})").format(e)
+            self.logger.info("Error while switching apps: {} ".format(e))
 
     # Event Call Back Methods end
 
